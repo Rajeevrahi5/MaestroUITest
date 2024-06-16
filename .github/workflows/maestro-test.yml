@@ -1,0 +1,42 @@
+name: Maestro Test
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+
+      - name: Set up Android emulator
+        uses: reactivecircus/setup-android-emulator@v2
+        with:
+            api-level: 29
+            package: 'system-images;android-29;google_apis;x86'
+            script: |
+                echo no | avdmanager --verbose create avd --force --name test --package 'system-images;android-29;google_apis;x86' --abi google_apis/x86
+
+      - name: Start Android emulator
+        uses: reactivecircus/start-android-emulator@v2
+        with:
+            emulator-version: 29
+            adb-serial-port: emulator-5554
+
+      - name: Grant permissions to emulator
+        run: adb shell appops set run com.android.commands.settings android.permission.CAMERA allow
+    
+
+      - name: Install Maestro
+        run: |
+          curl -sS https://get.maestro.io | bash
+          export PATH=$HOME/.maestro/bin:$PATH
+
+      - name: Run Maestro test
+        run: maestro test /tests/*.yaml
