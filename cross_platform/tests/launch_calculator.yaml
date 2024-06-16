@@ -1,0 +1,8 @@
+# This test will launch a calculator app
+appId: com.google.android.apps.messaging
+#appId: com.example.basiccalculator
+---
+
+- launchApp
+- tapOn: "Sign In"
+- tapOn: "Agree"
