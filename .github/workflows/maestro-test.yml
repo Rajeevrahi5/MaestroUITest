@@ -16,12 +16,12 @@ jobs:
           java-version: '11'
 
       - name: Set up Android emulator
-        uses: reactivecircus/setup-android-emulator@v2
+        uses: reactivecircus/android-emulator-runner@v2
         with:
-            api-level: 29
-            package: 'system-images;android-29;google_apis;x86'
-            script: |
-                echo no | avdmanager --verbose create avd --force --name test --package 'system-images;android-29;google_apis;x86' --abi google_apis/x86
+          api-level: 29
+          target: default
+          arch: x86
+          profile: Nexus 6
 
       - name: Start Android emulator
         uses: reactivecircus/start-android-emulator@v2
