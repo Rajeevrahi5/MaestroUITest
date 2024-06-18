@@ -26,12 +26,6 @@ jobs:
           arch: x86
           profile: Nexus 6
 
-      - name: Start Android emulator
-        uses: reactivecircus/start-android-emulator@v2
-        with:
-            emulator-version: 29
-            adb-serial-port: emulator-5554
-
       - name: Install Maestro
         run: |
           curl -sS https://get.maestro.io | bash
