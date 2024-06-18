@@ -15,10 +15,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'zulu'
-
-      - name: Grant permissions to emulator
-        run: adb shell appops set run com.android.commands.settings android.permission.CAMERA allow     
-
+          
       - name: Set up Android emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
